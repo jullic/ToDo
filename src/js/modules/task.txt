@@ -1,0 +1,429 @@
+import {typeTask} from './changeTypeTasks';
+
+const task = () => {
+    const task = {
+        completed: false,
+        text: 'Погулять с собакой',
+        descr: '',
+        list: [{completed: false, text: '1 задание'}],
+    }
+
+    class Task {
+        constructor() {
+            this.completed = false;
+            this.text = '';
+            this.descr = '';
+            this.list = [];
+        }
+        init() {
+
+        }
+        createHTML() {
+            this.mainInput = document.createElement('textarea');
+            this.mainCheckbox = document.createElement('button');
+            this.deleteBtn = document.createElement('button');
+            this.createListBtn = document.createElement('button');
+            this.descrElement = document.createElement('textarea');
+
+            this.mainInput.classList.add('todo__task-input');
+            this.mainCheckbox.classList.add('todo__task-checkbox');
+            this.deleteBtn.classList.add('todo__task-delete');
+            this.createListBtn.classList.add('todo__task-create-list');
+            this.descrElement.classList.add('todo__task-descr');
+
+            this.deleteBtn.innerHTML = `
+            <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.3984 12.5234H15.0391V25.6484H13.3984V12.5234Z" fill="white"/>
+                <path d="M16.6797 12.5234H18.3203V25.6484H16.6797V12.5234Z" fill="white"/>
+                <path d="M19.9609 12.5234H21.6016V25.6484H19.9609V12.5234Z" fill="white"/>
+                <path d="M6.83594 7.60156H28.1641V9.24219H6.83594V7.60156Z" fill="white"/>
+                <path d="M25.046 8.42187H23.513V6.78125C23.513 6.28906 19.6329 5.90625 19.1407 5.90625C17.8593 5.90625 17.1408 5.90625 15.8594 5.90625C15.3672 5.90625 11.4871 6.28906 11.4871 6.78125L11.487 8.42187H9.9541L9.95412 6.78125C9.95412 5.46875 13.8687 4.375 15.8594 4.375C17.8501 4.375 17.1501 4.375 19.1407 4.375C21.1312 4.375 25.046 5.46875 25.046 6.78125V8.42187Z" fill="white"/>
+                <path d="M22.4219 30.5703H12.5781C11.2656 30.5703 10.1172 29.4766 10.0078 28.1641L8.47656 8.47656L10.1172 8.36719L11.6484 28.0547C11.7031 28.5469 12.1406 28.9297 12.5781 28.9297H22.4219C22.9141 28.9297 23.3516 28.4922 23.3516 28.0547L24.8828 8.36719L26.5234 8.47656L24.9922 28.1641C24.8828 29.5312 23.7344 30.5703 22.4219 30.5703Z" fill="white"/>
+            </svg>`;
+            
+            return `
+                <li class="todo__task active">
+                    <div class="todo__task-main-info">
+                        ${this.mainCheckbox.outerHTML}
+                        ${this.mainInput.outerHTML}
+                        <div class="todo__task-main-btns">
+                        ${this.createListBtn.outerHTML}
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            ${this.deleteBtn.outerHTML}
+                        </div>
+                    </div>
+                    ${this.descrElement.outerHTML}
+                </li>`;
+        }
+        checkCompleted() {  
+
+        }
+        events() {
+            
+        }
+        renderTask(typeTask) {
+            if (typeTask === this.completed) {
+                return this;
+            }
+        }
+        checkValue() {
+
+        }
+        checkList() {
+
+        }
+        checkHeight(value) {
+
+        }
+    }
+
+    console.log(new Task().createHTML());
+    
+};  
+
+export default task;
+
+
+
+
+
+//////// 2 
+
+
+
+import {typeTask} from './changeTypeTasks';
+
+const task = () => {
+    const tasksContainer = document.querySelector('.todo__tasks');
+    const addTaskBtn = document.querySelector('.todo__create-task');
+    
+    let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+    
+    class Task {
+        constructor() {
+            this.completed = false;
+            this.mainText = '';
+            this.descr = '';
+            this.list = [];
+        }
+
+    }
+
+    function saveInputValue(task) {;
+        console.log(task);
+        
+        task.inputs.forEach((input) => {
+            if (input.name === 'task') {
+                console.log(1);
+                
+                task.mainText = input.value;
+            }
+        }); 
+    }
+
+    function createElement(task, index) {
+        let element = document.createElement('li');
+        element.classList.add('todo__task');
+        element.setAttribute('data-index', index);
+        element.innerHTML = `
+        <div class="todo__task-main-info">
+            <button class="todo__task-checkbox ${task.completed ? 'completed' : ''}"></button>
+            <textarea class="todo__task-input" name="task" placeholder="Новая задача">${task.mainText}</textarea>
+            <div class="todo__task-main-btns">
+                <button class="todo__task-create-list">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="todo__task-delete">
+                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.3984 12.5234H15.0391V25.6484H13.3984V12.5234Z" fill="white"/>
+                        <path d="M16.6797 12.5234H18.3203V25.6484H16.6797V12.5234Z" fill="white"/>
+                        <path d="M19.9609 12.5234H21.6016V25.6484H19.9609V12.5234Z" fill="white"/>
+                        <path d="M6.83594 7.60156H28.1641V9.24219H6.83594V7.60156Z" fill="white"/>
+                        <path d="M25.046 8.42187H23.513V6.78125C23.513 6.28906 19.6329 5.90625 19.1407 5.90625C17.8593 5.90625 17.1408 5.90625 15.8594 5.90625C15.3672 5.90625 11.4871 6.28906 11.4871 6.78125L11.487 8.42187H9.9541L9.95412 6.78125C9.95412 5.46875 13.8687 4.375 15.8594 4.375C17.8501 4.375 17.1501 4.375 19.1407 4.375C21.1312 4.375 25.046 5.46875 25.046 6.78125V8.42187Z" fill="white"/>
+                        <path d="M22.4219 30.5703H12.5781C11.2656 30.5703 10.1172 29.4766 10.0078 28.1641L8.47656 8.47656L10.1172 8.36719L11.6484 28.0547C11.7031 28.5469 12.1406 28.9297 12.5781 28.9297H22.4219C22.9141 28.9297 23.3516 28.4922 23.3516 28.0547L24.8828 8.36719L26.5234 8.47656L24.9922 28.1641C24.8828 29.5312 23.7344 30.5703 22.4219 30.5703Z" fill="white"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <textarea class="todo__task-descr" name="descr" placeholder="Заметки">${task.descr}</textarea>
+        <ul class="todo__task-list">
+        </ul>`;
+        task.element = element;
+        task.inputs = task.element.querySelectorAll('textarea');
+        task.inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (input.tagName === 'task') {
+                    task.mainText = input.value;
+                }
+            });
+            
+        });
+        task.listContainer = task.element.querySelector('.todo__task-list');
+        return element;
+    }
+    
+
+    function renderTasks(isLoadPage) {
+        tasksContainer.innerHTML = '';
+        tasks.forEach((task, index) => {
+            tasksContainer.append(task.element = createElement(task, index)); 
+            saveInputValue(task);
+            task.element.classList.remove('active');
+        });
+        if (!isLoadPage) {
+            tasks[tasks.length - 1].element.classList.add('active');
+        }
+    }
+    renderTasks(true);
+
+    function updateLocalStorage() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function checkParent(target, parentClass) {
+        let container = target;
+        while (true) {
+            if (container.classList.contains(parentClass)) {
+                return true;
+            }
+            if (container.tagName === 'BODY') {
+                return false;
+            }
+            container = container.parentElement;
+        }
+    }
+    function searchParent(target, parentClass) {
+        let container = target;
+        while (true) {
+            if (container.classList.contains(parentClass)) {
+                return container;
+            }
+            if (container.tagName === 'BODY') {
+                return -1;
+            }
+            container = container.parentElement;
+        }
+    }
+
+    function removeTask(index) {
+        if (index === -1) {
+            return;
+        }
+        tasks.splice(index, 1);
+    }
+
+
+
+    // event
+    addTaskBtn.addEventListener('click', () => {
+        tasks.push(new Task());
+        renderTasks(false);
+        updateLocalStorage();
+    });
+    tasksContainer.addEventListener('click', (e) => {
+        if(e.target && checkParent(e.target, 'todo__task-delete')) {
+            removeTask(searchParent(e.target, 'todo__task').getAttribute('data-index'));
+            console.log(tasks);
+            renderTasks(true);
+            updateLocalStorage();
+        }
+    });
+
+    
+    
+};
+
+export default task;
+
+
+
+////// 3
+
+const tasksContainer = document.querySelector('.todo__tasks');
+    const addTaskBnt = document.querySelector('.todo__create-task');
+    let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+    
+    function clearLocal() {
+        localStorage.clear();
+    }
+
+    class Task {
+        constructor() {
+            this.completed = false;
+            this.mainText = '';
+            this.descr = '';
+            this.list = [];
+            this.addListBtn = true;
+        }
+    }
+
+    function checkParent(target, parentClass, isSearch = false) {
+        let container = target;
+        while(true) {
+            
+            if (container.classList.contains(parentClass)) {
+                if (isSearch) {
+                    return container;
+                }
+                return true;
+            }
+            if (container.tagName === 'BODY') {
+                return false;
+            }
+            container = container.parentElement;
+        }
+    }
+
+    function maxHeight(task) {
+        if (!task.element.classList.contains('active')) {
+            task.element.style.maxHeight = parseInt(window.getComputedStyle(task.element).paddingBottom) + parseInt(window.getComputedStyle(task.element).paddingTop) + parseInt(window.getComputedStyle(task.element.querySelector('.todo__task-main-info')).height) + 'px';
+            console.log(1);
+        }
+        else {
+            console.log(2);
+            task.element.style.maxHeight = parseInt(window.getComputedStyle(task.element).height) + 'px';
+        }
+    }
+
+
+    tasksContainer.addEventListener('click', (e) => {
+
+        if (e.target && checkParent(e.target, 'todo__task-checkbox')) {
+            toggleComplete(tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')]);
+            console.log(tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')]);
+            updateLocalStorage();
+            
+        }
+        // if (e.target && checkParent(e.target, 'todo__task') && !checkParent(e.target, 'todo__task', true).classList.contains('active')) {
+        //     checkParent(e.target, 'todo__task', true).classList.add('active');
+        //     renderTasks();
+            
+        // }
+        
+        // if (e.target && checkParent(e.target, 'todo__task-create-list')) {
+        //     console.log(tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')]);
+        //     tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')].addListBtn = !tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')].addListBtn;
+        //     renderTasks();
+        //     tasks[checkParent(e.target, 'todo__task', true).getAttribute('data-index')].element.classList.add('active')
+        //     updateLocalStorage();
+        //     return;
+        // }
+        if (e.target && checkParent(e.target, 'todo__task-delete')) {
+            tasks.splice([checkParent(e.target, 'todo__task', true).getAttribute('data-index')], 1);
+            renderTasks();
+            updateLocalStorage();
+            return;
+        }
+
+    });
+    addTaskBnt.addEventListener('click', () => {
+        saveTasks();
+        tasks.push(new Task());
+        renderTasks(true);
+    });
+
+    function toggleComplete(task) {
+        task.completed = !task.completed;
+        task.element.querySelector('.todo__task-checkbox').classList.remove('completed');
+        if (task.completed) {
+            task.element.querySelector('.todo__task-checkbox').classList.add('completed');
+        }
+    }
+
+    function createTask(obj, index) {
+        let task = document.createElement('li');
+        task.classList.add('todo__task');
+        task.setAttribute('data-index', index);
+        task.innerHTML += `
+        <div class="todo__task-main-info"">
+            <button class="todo__task-checkbox ${obj.completed ? 'completed' : ''}"></button>
+            <textarea class="todo__task-input" name="task" placeholder="Новая задача">${obj.mainText}</textarea>
+            <div class="todo__task-main-btns">
+                <button class="todo__task-create-list ${!obj.addListBtn ? 'active' : ''}">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="todo__task-delete">
+                    <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.3984 12.5234H15.0391V25.6484H13.3984V12.5234Z" fill="white"/>
+                        <path d="M16.6797 12.5234H18.3203V25.6484H16.6797V12.5234Z" fill="white"/>
+                        <path d="M19.9609 12.5234H21.6016V25.6484H19.9609V12.5234Z" fill="white"/>
+                        <path d="M6.83594 7.60156H28.1641V9.24219H6.83594V7.60156Z" fill="white"/>
+                        <path d="M25.046 8.42187H23.513V6.78125C23.513 6.28906 19.6329 5.90625 19.1407 5.90625C17.8593 5.90625 17.1408 5.90625 15.8594 5.90625C15.3672 5.90625 11.4871 6.28906 11.4871 6.78125L11.487 8.42187H9.9541L9.95412 6.78125C9.95412 5.46875 13.8687 4.375 15.8594 4.375C17.8501 4.375 17.1501 4.375 19.1407 4.375C21.1312 4.375 25.046 5.46875 25.046 6.78125V8.42187Z" fill="white"/>
+                        <path d="M22.4219 30.5703H12.5781C11.2656 30.5703 10.1172 29.4766 10.0078 28.1641L8.47656 8.47656L10.1172 8.36719L11.6484 28.0547C11.7031 28.5469 12.1406 28.9297 12.5781 28.9297H22.4219C22.9141 28.9297 23.3516 28.4922 23.3516 28.0547L24.8828 8.36719L26.5234 8.47656L24.9922 28.1641C24.8828 29.5312 23.7344 30.5703 22.4219 30.5703Z" fill="white"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <textarea class="todo__task-descr" name="" placeholder="Заметки">${obj.descr}</textarea>`;
+        task.append(createList(obj));
+
+        return task;
+    }
+
+    function createList(obj) {
+        let list = document.createElement('ul');
+        list.classList.add('todo__task-list');
+        obj.list.forEach(li => {
+            list.innerHTML += `
+            <li class="todo__task-list-item">
+                <button class="todo__task-list-item-checkbox${li.completed ? 'completed' : ''}"></button>
+                <input class="todo__task-list-item-text" type="text" value="${li.text}">
+            </li>`;
+        });
+        return list;
+    }
+
+    function addEventInput(task) {
+        task.inputs = task.element.querySelectorAll('textarea');
+        task.inputs.forEach(input => {
+            input.removeEventListener('input', saveTasks);
+        });
+        task.inputs.forEach(input => {
+            input.addEventListener('input', saveTasks);
+        });
+    }
+
+    function saveTasks() {
+        tasks.forEach(task => {
+            task.mainText = task.element.querySelector('.todo__task-input').value;
+            task.descr = task.element.querySelector('.todo__task-descr').value;
+        }); 
+        updateLocalStorage();
+    }
+
+    function updateLocalStorage() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function renderTasks(isActiveClass) {
+        tasksContainer.innerHTML = '';
+        tasks.forEach((task, index) => {
+            tasksContainer.append(task.element = createTask(task, index));
+            addEventInput(task);
+        });
+        if (tasks.length > 0 && isActiveClass) {
+            tasks[tasks.length - 1].element.classList.add('active');
+        }
+        tasks.forEach((task) => {
+            if (task.element.classList.contains('active')) {
+                task.element.style.maxHeight = parseInt(window.getComputedStyle(task.element).height) + 'px';
+            }
+            else {
+                task.element.style.maxHeight = parseInt(window.getComputedStyle(task.element).paddingBottom) + parseInt(window.getComputedStyle(task.element).paddingTop) + parseInt(window.getComputedStyle(task.element.querySelector('.todo__task-main-info')).height) + 'px';
+                task.element.style.maxHeight = 'auto';
+            }
+        });
+        updateLocalStorage();
+    }
+    renderTasks(false);
+
+
+    console.log(tasks);
+    
